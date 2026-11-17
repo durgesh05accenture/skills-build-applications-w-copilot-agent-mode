@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import { createActivity, createTeam, getLeaderboard, listActivities, listTeams, suggestWorkouts } from '../services/octofitService.js';
+import { customizeResume } from '../services/resumeService.js';
 
 export const apiRouter = Router();
 
+apiRouter.post('/resume/customize', (request, response, next) => {
+  try { response.json(customizeResume(request.body)); } catch (error) { next(error); }
+});
 apiRouter.get('/activities', async (_request, response, next) => {
   try { response.json({ activities: await listActivities() }); } catch (error) { next(error); }
 });
